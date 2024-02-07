@@ -17,6 +17,7 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_systems(Startup, setup)
+        .add_systems(Startup, setup1)
         .add_systems(Update, sprite_movement)
         .run();
 }
@@ -33,6 +34,18 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         SpriteBundle {
             texture: asset_server.load("goblinhole/goblin.png"),
             transform: Transform::from_xyz(100., 0., 0.),
+            ..default()
+        },
+        Direction::Up,
+    ));
+}
+
+fn setup1(mut commands: Commands, asset_server: Res<AssetServer>) {
+    commands.spawn(Camera2dBundle::default());
+    commands.spawn((
+        SpriteBundle {
+            texture: asset_server.load("goblinhole/goblinwore.png"),
+            transform: Transform::from_xyz(-100., 0., 0.),
             ..default()
         },
         Direction::Up,
