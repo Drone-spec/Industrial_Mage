@@ -37,6 +37,30 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         },
         Direction::Up,
     ));
+    commands.spawn((
+        SpriteBundle {
+            texture: asset_server.load("goblinhole/goblin.png"),
+            transform: Transform::from_xyz(150., 0., 0.),
+            ..default()
+        },
+        Direction::Up,
+    ));
+    commands.spawn((
+        SpriteBundle {
+            texture: asset_server.load("goblinhole/goblinwore.png"),
+            transform: Transform::from_xyz(80., 0., 0.),
+            ..default()
+        },
+        Direction::Up,
+    ));
+    commands.spawn((
+        SpriteBundle {
+            texture: asset_server.load("wiznerd/Wizard.png"),
+            transform: Transform::from_xyz(200., 0., 0.),
+            ..default()
+        },
+        Direction::Up,
+    ));
 }
 
 /// The sprite is animated by changing its translation depending on the time that has passed since
