@@ -4,18 +4,24 @@ use bevy::prelude::*;
 
 
 
-// This loads the other files that will hold the functions and systems. We will need to use pub fn to call them outside of that function
-// MORE TO Follow
-mod goblinlogic;
 mod forge;
 mod ore;
-
-
-
-
+mod movement;
+mod wizard;
+mod debug;
+mod camera;
+// Above loads the other files that will hold the functions and systems. We will need to use pub fn to call them outside of that function
+// MORE TO Follow
+use bevy::{prelude::*, window::close_on_esc};
+use movement::MovementPlugin;
+use ore::OreLogicPlugin;
+use wizard::WizardPlugin;
+use debug::DebugPlugin;
+use camera::CameraLogic;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
+<<<<<<< HEAD
         .add_systems(Startup, setup)
         .add_systems(Startup, spawn_wizard)
         .add_systems(Update, sprite_movement)
@@ -91,3 +97,13 @@ fn sprite_movement(time: Res<Time>, mut sprite_position: Query<(&mut Direction, 
         }
     }
 }
+=======
+        .add_plugins(WizardPlugin)
+        .add_plugins(DebugPlugin)
+        .add_plugins(MovementPlugin)
+        .add_plugins(OreLogicPlugin)
+        .add_plugins(CameraLogic)
+        .add_systems(Update, close_on_esc)
+        .run();
+}
+>>>>>>> e64e86eb5714a8069b218536d4bf4305185f8234
