@@ -13,8 +13,8 @@ impl Plugin for OreLogicPlugin {
 // Below was built using the 2d Sprite Sheets demo from assets
 
 
-const SPRITESHEET_HEIGHT: usize = 640;
-const SPRITESHEET_WIDTH: usize = 640;
+const SPRITESHEET_HEIGHT: usize = 64;
+const SPRITESHEET_WIDTH: usize = 64;
 const TEXTURE_PATH: &str = "terra/terrain.png";
 
 fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_atlases: ResMut<Assets<TextureAtlas>>,
