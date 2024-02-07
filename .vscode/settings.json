@@ -1,0 +1,5 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./Industrial_Mage/Cargo.toml"
+    ]
+}
