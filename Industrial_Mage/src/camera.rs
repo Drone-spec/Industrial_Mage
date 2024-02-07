@@ -1,5 +1,6 @@
 // This should have all logic that details out Goblins and Goblin behavior.
 use bevy::prelude::*;
+use bevy_pancam::{PanCam, PanCamPlugin};
 pub struct CameraLogic;
 
 impl Plugin for CameraLogic {
@@ -10,6 +11,8 @@ impl Plugin for CameraLogic {
 
 
 
-pub fn setupcamera(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+fn setupcamera(mut commands: Commands) {
+    commands
+        .spawn(Camera2dBundle::default())
+        .insert(PanCam::default());
 }

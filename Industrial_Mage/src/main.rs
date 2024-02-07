@@ -9,6 +9,7 @@ mod camera;
 // MORE TO Follow
 use bevy::{prelude::*, window::close_on_esc};
 use movement::MovementPlugin;
+use ore::OreLogicPlugin;
 use wizard::WizardPlugin;
 use debug::DebugPlugin;
 use camera::CameraLogic;
@@ -18,6 +19,7 @@ fn main() {
         .add_plugins(WizardPlugin)
         .add_plugins(DebugPlugin)
         .add_plugins(MovementPlugin)
+        .add_plugins(OreLogicPlugin)
         .add_plugins(CameraLogic)
         .add_systems(Update, close_on_esc)
         .run();
