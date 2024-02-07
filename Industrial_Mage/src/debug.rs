@@ -1,4 +1,5 @@
-use bevy::prelude::*;
+use bevy::{prelude::*, transform};
+
 pub struct DebugPlugin;
 
 impl Plugin for DebugPlugin {
@@ -8,9 +9,10 @@ impl Plugin for DebugPlugin {
 }
 
 
-pub fn debug_print_position(query: Query<Entity, &Position>) {
+pub fn debug_print_position(query: Query<(Entity, &Transform)>) {
 
-    for (entity, position) in query.iter() {
-        info!("Entity: {:?} is at Position {:?}", entity, position);
+    for (Entity, transform) in query.iter() {
+        info!("Entity: {:?} is at Position {:?}", Entity, transform.translation);
+        
     }
 }
