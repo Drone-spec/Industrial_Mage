@@ -1,14 +1,21 @@
-//! Renders a 2D scene containing a single, moving sprite.
 
-use bevy::prelude::*;
-
-
-
-// This loads the other files that will hold the functions and systems. We will need to use pub fn to call them outside of that function
-// MORE TO Follow
-mod goblinlogic;
 mod forge;
 mod ore;
+mod movement;
+mod wizard;
+mod debug;
+// Above loads the other files that will hold the functions and systems. We will need to use pub fn to call them outside of that function
+// MORE TO Follow
+use bevy::prelude::*;
+use movement::MovementPlugin;
+use wizard::WizardPlugin;
+use debug::DebugPlugin;
+
+
+
+
+
+
 
 
 
@@ -16,8 +23,10 @@ mod ore;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
+        .add_plugins(WizardPlugin)
+        .add_plugins(DebugPlugin)
+        .add_plugins(MovementPlugin)
         .add_systems(Startup, setup)
-        .add_systems(Startup, setup1)
         .add_systems(Update, sprite_movement)
         .run();
 }
@@ -64,17 +73,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     ));
 }
 
-fn setup1(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn(Camera2dBundle::default());
-    commands.spawn((
-        SpriteBundle {
-            texture: asset_server.load("goblinhole/goblinwore.png"),
-            transform: Transform::from_xyz(-100., 0., 0.),
-            ..default()
-        },
-        Direction::Up,
-    ));
-}
+
 
 /// The sprite is animated by changing its translation depending on the time that has passed since
 /// the last frame.
