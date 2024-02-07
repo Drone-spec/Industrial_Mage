@@ -20,7 +20,6 @@ use debug::DebugPlugin;
 use camera::CameraLogic;
 fn main() {
     App::new()
-        .add_plugins(DefaultPlugins)
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
         .add_plugins(WizardPlugin)
         .add_plugins(DebugPlugin)
