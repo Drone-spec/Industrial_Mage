@@ -16,12 +16,13 @@ impl Plugin for OreLogicPlugin {
 
 // Below was built using the 2d Sprite Sheets demo from assets
 
-const MAPHIGHT: usize = 640;
-const MAPWIDTH: usize = 640;
+const MAPHIGHT: usize = 80;
+const MAPWIDTH: usize = 80;
 const SPRITESHEET_HEIGHT: usize = 64;
 const SPRITESHEET_WIDTH: usize = 64;
 const TEXTURE_PATH: &str = "terra/terrain.png";
-const SPRITESCALE: usize = 15;
+const SPRITESCALE: usize = 2;
+const NOISE_SCALE: f64 = 10.5;
 
 fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_atlases: ResMut<Assets<TextureAtlas>>,
 ) {
@@ -38,7 +39,7 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
     let mut tiles = HashSet::new();
     for x in 0..MAPHIGHT{
         for y in 0..MAPWIDTH {
-            let mapvar = perlin.get([x as f64 + 0.1, y as f64 + 0.1]);
+            let mapvar = perlin.get([x as f64 / NOISE_SCALE, y as f64 / NOISE_SCALE]);
             if mapvar < 0.2 {
                 continue;
             }
