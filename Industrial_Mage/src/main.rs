@@ -10,6 +10,7 @@ mod movement;
 mod wizard;
 mod debug;
 mod camera;
+mod entitylogic;
 //mod despawn;
 // Above loads the other files that will hold the functions and systems. We will need to use pub fn to call them outside of that function
 // MORE TO Follow
@@ -20,6 +21,7 @@ use ore::OreLogicPlugin;
 use wizard::WizardPlugin;
 use debug::DebugPlugin;
 use camera::CameraLogic;
+use entitylogic::EntityLogic;
 //use despawn::DespawnPlugin;
 fn main() {
     App::new()
@@ -31,6 +33,7 @@ fn main() {
         .add_plugins(CameraLogic)
         .add_plugins(PanCamPlugin)
         //.add_plugins(DespawnPlugin)
+        .add_plugins(EntityLogic)
         .add_systems(Update, close_on_esc)
         .insert_resource(Msaa::Off)
         .run();
