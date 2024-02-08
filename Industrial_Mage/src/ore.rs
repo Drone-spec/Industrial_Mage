@@ -53,16 +53,18 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
             }
             // THIS IS JUST A DEBUG MESSAGE DO NOT LEAVE IN
             println!("{}", mapvar);
-            tiles.insert((x, y));
+            tiles.insert((x as i32, y as i32));
         }
     }
 
     for (x, y) in tiles.iter() {
+        let tile = get_tile((*x, *y), &tiles);
         let (x, y) = grid_to_world(*x as f32, *y as f32);
+        
         commands.spawn((
             SpriteSheetBundle {
                 texture_atlas: texture_atlas_handle.clone(),
-                sprite: TextureAtlasSprite::new(0),
+                sprite: TextureAtlasSprite::new(tile),
                 transform: Transform::from_scale(Vec3::splat(SPRITESCALE as f32)).with_translation(vec3(x, y, 0.0)),
                 ..default()
             },
@@ -71,6 +73,36 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
     }
 
 }
+
+fn get_tile((x, y): (i32, i32), occupied: &HashSet<(i32, i32)>) -> usize {
+    let (x, y) = (x as i32, y as i32);
+    let neighbor_options = [(-1, 0), (1, 0),(0,-1),(0,1) ];
+    let mut neightbor = [1,1,1,1];
+    for (idx, (i, j)) in neighbor_options.iter().enumerate() {
+        if occupied.contains(&(x + i, y + j)) {
+            continue;
+        }
+        neightbor[idx] = 0;
+    }
+    let tile = match neightbor {
+        [1,0,0,1] => 3,
+        [0,1,0,1] => 4,
+        [1,0,1,0] => 2, 
+        [0,1,1,0] => 1, //correct
+
+        _ => 0
+    };
+    tile
+
+    
+}
+
+
+
+
+
+
+
 
 fn grid_to_world(x: f32, y: f32) -> (f32, f32){
     (
