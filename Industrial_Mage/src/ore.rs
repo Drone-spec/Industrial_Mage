@@ -41,6 +41,7 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
         for y in 0..MAPWIDTH {
             let mapvar = perlin.get([x as f64 / NOISE_SCALE, y as f64 / NOISE_SCALE]);
             if mapvar < 0.2 {
+                // Make this Value The hard rock!
                 continue;
             }
             // THIS IS JUST A DEBUG MESSAGE DO NOT LEAVE IN
