@@ -6,7 +6,7 @@ pub struct EntityLogic;
 
 impl Plugin for EntityLogic {
     fn build(&self, app: &mut App) {
-    //app.add_systems(Update, debug_print_position);
+    app.add_systems(Startup, spawn_goblin);
     }
 }
 
@@ -45,12 +45,11 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
             acceleration: Acceleration::new(Vec3::ZERO),
             model: SpriteBundle
             {
-                texture: asset_server.load("golbinhole/goblin.png"),
+                texture: asset_server.load("goblinhole/goblin.png"),
                 transform: Transform::from_translation(STARTING_TRANSLATION),
                 ..default()
             },
         },
-    Wizard,
     ));
 }
 
