@@ -3,7 +3,7 @@ use std::arch::x86_64::_MM_FLUSH_ZERO_OFF;
 use bevy::{math::vec3, prelude::*, transform, ui::update};
 use crate::movement::{self, *};
 
-const STARTING_TRANSLATION: Vec3 = Vec3::new(500., 0., 4.);
+const STARTING_TRANSLATION: Vec3 = Vec3::new(500., 0., 1.);
 const WIZARD_SPEED: f32 = 250.0;
 const SPELL_SPEED: f32 = 500.;
 const SPELL_FORWARD_SPAWN_SCALAR: f32 = 75.0;
@@ -63,7 +63,7 @@ fn wizard_movement_controls(mut query: Query<(&mut Transform, &mut Velocity), Wi
     }
     else
     {
-        velocity.value = transform.forward();
+        velocity.value = transform.back();
     }
 }
 
