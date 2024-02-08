@@ -15,13 +15,18 @@ impl Plugin for OreLogicPlugin {
 }
 
 // Below was built using the 2d Sprite Sheets demo from assets
-
+// Below is the Map Details
 const MAPHIGHT: usize = 80;
 const MAPWIDTH: usize = 80;
-const SPRITESHEET_HEIGHT: usize = 64;
-const SPRITESHEET_WIDTH: usize = 64;
+
+// Sprite Details 
+const TILE_HEIGHT: usize = 64;
+const TILE_WIDTH: usize = 64;
+const SPRITESHEET_HEIGHT: usize = 128 / TILE_HEIGHT;
+const SPRITESHEET_WIDTH: usize = 640 / TILE_WIDTH;
 const TEXTURE_PATH: &str = "terra/terrain.png";
-const SPRITESCALE: usize = 2;
+const SPRITESCALE: usize = 4;
+// Perlin Noise scale
 const NOISE_SCALE: f64 = 10.5;
 
 fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_atlases: ResMut<Assets<TextureAtlas>>,
@@ -29,7 +34,7 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
     // BELOW IS USED TO HANDLE THE LOADING OF MAP ASSETS
     let texture_handle = asset_server.load(TEXTURE_PATH);
     let texture_atlas =
-        TextureAtlas::from_grid(texture_handle, Vec2::new(SPRITESHEET_WIDTH as f32, SPRITESHEET_HEIGHT as f32), 7, 1, None, None);
+        TextureAtlas::from_grid(texture_handle, Vec2::new(TILE_WIDTH as f32, TILE_HEIGHT as f32), SPRITESHEET_WIDTH, SPRITESHEET_HEIGHT, None, None);
     let texture_atlas_handle = texture_atlases.add(texture_atlas);
     // Below is the actual Generation of some of the map assets!
     let mut rngseed = rand::thread_rng();
@@ -69,7 +74,7 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
 
 fn grid_to_world(x: f32, y: f32) -> (f32, f32){
     (
-        x * MAPWIDTH as f32 * SPRITESCALE as f32,
-        y * MAPHIGHT as f32 * SPRITESCALE as f32
+        x * TILE_WIDTH as f32 * SPRITESCALE as f32,
+        y * TILE_HEIGHT as f32 * SPRITESCALE as f32
     )
 }

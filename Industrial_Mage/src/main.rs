@@ -29,5 +29,6 @@ fn main() {
         .add_plugins(CameraLogic)
         .add_plugins(PanCamPlugin)
         .add_systems(Update, close_on_esc)
+        .insert_resource(Msaa::Off)
         .run();
 }
