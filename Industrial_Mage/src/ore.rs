@@ -1,3 +1,4 @@
+use bevy::sprite::collide_aabb::Collision;
 // This should hold all Logic to do with Ore and Maybe all functions associated with those systems
 // Also World Generation!!!
 use bevy::{math::vec3, prelude::*, render::texture, transform::commands, utils::hashbrown::HashSet};
@@ -52,7 +53,7 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
                 
             }
             // THIS IS JUST A DEBUG MESSAGE DO NOT LEAVE IN
-            println!("{}", mapvar);
+            //println!("{}", mapvar);
             tiles.insert((x as i32, y as i32));
         }
     }
@@ -66,10 +67,13 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
                 texture_atlas: texture_atlas_handle.clone(),
                 sprite: TextureAtlasSprite::new(tile),
                 transform: Transform::from_scale(Vec3::splat(SPRITESCALE as f32)).with_translation(vec3(x, y, 0.0)),
+                
                 ..default()
+                
             },
     
-        ));
+        ))
+        ;
     }
 
 }
