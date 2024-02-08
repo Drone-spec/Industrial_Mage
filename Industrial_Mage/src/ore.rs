@@ -43,6 +43,8 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
             if mapvar < 0.2 {
                 // Make this Value The hard rock!
                 continue;
+            } else {
+                
             }
             // THIS IS JUST A DEBUG MESSAGE DO NOT LEAVE IN
             println!("{}", mapvar);
