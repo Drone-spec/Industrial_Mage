@@ -10,6 +10,7 @@ mod movement;
 mod wizard;
 mod debug;
 mod camera;
+//mod despawn;
 // Above loads the other files that will hold the functions and systems. We will need to use pub fn to call them outside of that function
 // MORE TO Follow
 use bevy::{prelude::*, window::close_on_esc};
@@ -19,6 +20,7 @@ use ore::OreLogicPlugin;
 use wizard::WizardPlugin;
 use debug::DebugPlugin;
 use camera::CameraLogic;
+//use despawn::DespawnPlugin;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
@@ -28,6 +30,7 @@ fn main() {
         .add_plugins(OreLogicPlugin)
         .add_plugins(CameraLogic)
         .add_plugins(PanCamPlugin)
+        //.add_plugins(DespawnPlugin)
         .add_systems(Update, close_on_esc)
         .insert_resource(Msaa::Off)
         .run();
