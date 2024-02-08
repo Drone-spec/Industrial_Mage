@@ -5,6 +5,8 @@ use crate::movement::{self, *};
 
 const STARTING_TRANSLATION: Vec3 = Vec3::new(500., 0., 4.);
 const WIZARD_SPEED: f32 = 250.0;
+const SPELL_SPEED: f32 = 500.;
+const SPELL_FORWARD_SPAWN_SCALAR: f32 = 75.0;
 
 // All Wizard stuff should be in here..
 pub struct WizardPlugin;
@@ -12,10 +14,13 @@ pub struct WizardPlugin;
 #[derive(Component, Debug)]
 pub struct Wizard;
 
+#[derive(Component, Debug)]
+pub struct WizardSpell;
+
 impl Plugin for WizardPlugin {
     fn build(&self, app: &mut App) {
     app.add_systems(Startup, spawn_wizard)
-        .add_systems(Update, wizard_movement_controls);
+        .add_systems(Update, (wizard_movement_controls, wizard_weapon_controls),);
     }
 }
 
@@ -60,5 +65,25 @@ fn wizard_movement_controls(mut query: Query<(&mut Transform, &mut Velocity), Wi
     {
         velocity.value = transform.forward();
     }
+}
 
+fn wizard_weapon_controls(mut commands: Commands, query: Query<&Transform, With<Wizard>>, keyboard_input: Res<Input<KeyCode>>, asset_server: Res<AssetServer>,)
+{
+    let transform = query.single();
+
+    if keyboard_input.pressed(KeyCode::Space)
+    {
+        commands.spawn((MovingObjectBundle
+        {
+            velocity: Velocity::new(transform.right() * SPELL_SPEED),
+            acceleration: Acceleration::new(Vec3::ZERO),
+            model: SpriteBundle
+            {
+                texture: asset_server.load("wiznerd/fireball.png"),
+                transform: Transform::from_translation(transform.translation + transform.right() * SPELL_FORWARD_SPAWN_SCALAR),
+                ..default()
+            },
+        },
+        WizardSpell,));
+    }
 }
