@@ -3,10 +3,10 @@ use std::arch::x86_64::_MM_FLUSH_ZERO_OFF;
 use bevy::{math::vec3, prelude::*, transform, ui::update};
 use crate::movement::{self, *};
 
-const STARTING_TRANSLATION: Vec3 = Vec3::new(500., 0., 1.);
-const WIZARD_SPEED: f32 = 250.0;
-const SPELL_SPEED: f32 = 500.;
-const SPELL_FORWARD_SPAWN_SCALAR: f32 = 75.0;
+const STARTING_TRANSLATION      : Vec3 = Vec3::new(500., 0., 1.);
+const WIZARD_SPEED              : f32  = 250.0;
+const SPELL_SPEED               : f32  = 500.0;
+const SPELL_FORWARD_SPAWN_SCALAR: f32  =  30.0;
 
 // All Wizard stuff should be in here..
 pub struct WizardPlugin;
@@ -17,10 +17,12 @@ pub struct Wizard;
 #[derive(Component, Debug)]
 pub struct WizardSpell;
 
-impl Plugin for WizardPlugin {
-    fn build(&self, app: &mut App) {
-    app.add_systems(Startup, spawn_wizard)
-        .add_systems(Update, (wizard_movement_controls, wizard_weapon_controls),);
+impl Plugin for WizardPlugin 
+{
+    fn build(&self, app: &mut App) 
+    {
+        app.add_systems(Startup, spawn_wizard)
+            .add_systems(Update, (wizard_movement_controls, wizard_weapon_controls),);
     }
 }
 
@@ -84,6 +86,7 @@ fn wizard_weapon_controls(mut commands: Commands, query: Query<&Transform, With<
                 ..default()
             },
         },
-        WizardSpell,));
+        WizardSpell,
+        ));
     }
 }
