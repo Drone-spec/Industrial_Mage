@@ -2,6 +2,9 @@
 // Also World Generation!!!
 use bevy::{math::vec3, prelude::*, render::texture, transform::commands, utils::hashbrown::HashSet};
 use noise::Perlin;
+use noise::NoiseFn;
+use rand::Rng;
+
 
 pub struct OreLogicPlugin;
 
@@ -13,12 +16,12 @@ impl Plugin for OreLogicPlugin {
 
 // Below was built using the 2d Sprite Sheets demo from assets
 
-const MAPHIGHT: usize = 1000;
-const MAPWIDTH: usize = 1000;
+const MAPHIGHT: usize = 640;
+const MAPWIDTH: usize = 640;
 const SPRITESHEET_HEIGHT: usize = 64;
 const SPRITESHEET_WIDTH: usize = 64;
 const TEXTURE_PATH: &str = "terra/terrain.png";
-const SPRITESCALE: usize = 5;
+const SPRITESCALE: usize = 15;
 
 fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_atlases: ResMut<Assets<TextureAtlas>>,
 ) {
@@ -49,9 +52,9 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
         let (x, y) = grid_to_world(*x as f32, *y as f32);
         commands.spawn((
             SpriteSheetBundle {
-                texture_atlas: texture_atlas_handle,
-                sprite: TextureAtlasSprite::new(1),
-                transform: Transform::from_scale(Vec3::splat(SPRITESCALE as f32)).with_translation(vec3(*x, *y, 0.0)),
+                texture_atlas: texture_atlas_handle.clone(),
+                sprite: TextureAtlasSprite::new(0),
+                transform: Transform::from_scale(Vec3::splat(SPRITESCALE as f32)).with_translation(vec3(x, y, 0.0)),
                 ..default()
             },
     
