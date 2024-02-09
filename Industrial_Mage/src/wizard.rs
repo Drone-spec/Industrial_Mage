@@ -4,9 +4,9 @@ use bevy::{input::mouse, math::vec3, prelude::*, transform, ui::update};
 use crate::movement::{self, *};
 
 pub const STARTING_TRANSLATION      : Vec3 = Vec3::new(500., 0., 1.);
-const WIZARD_SPEED              : f32  = 250.0;
-const SPELL_SPEED               : f32  = 500.0;
-const SPELL_FORWARD_SPAWN_SCALAR: f32  =  30.0;
+const WIZARD_SPEED                  : f32  = 250.0;
+const SPELL_SPEED                   : f32  = 500.0;
+const SPELL_FORWARD_SPAWN_SCALAR    : f32  =  30.0;
 
 // All Wizard stuff should be in here..
 pub struct WizardPlugin;
@@ -65,7 +65,7 @@ fn wizard_movement_controls(mut query: Query<(&mut Transform, &mut Velocity), Wi
     }
     else
     {
-        velocity.value = transform.back();
+        velocity.value = (transform.back() + transform.forward());
     }
 }
 

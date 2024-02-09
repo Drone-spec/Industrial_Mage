@@ -14,13 +14,13 @@ mod entitylogic;
 //mod despawn;
 // Above loads the other files that will hold the functions and systems. We will need to use pub fn to call them outside of that function
 // MORE TO Follow
-use bevy::{prelude::*, window::close_on_esc};
+use bevy       ::{prelude::*, window::close_on_esc};
 use bevy_pancam::PanCamPlugin;
-use movement::MovementPlugin;
-use ore::OreLogicPlugin;
-use wizard::WizardPlugin;
-use debug::DebugPlugin;
-use camera::CameraLogic;
+use movement   ::MovementPlugin;
+use ore        ::OreLogicPlugin;
+use wizard     ::WizardPlugin;
+use debug      ::DebugPlugin;
+use camera     ::CameraLogic;
 use entitylogic::EntityLogic;
 //use despawn::DespawnPlugin;
 fn main() {

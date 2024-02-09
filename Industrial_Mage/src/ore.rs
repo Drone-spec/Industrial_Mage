@@ -1,10 +1,10 @@
 use bevy::sprite::collide_aabb::Collision;
 // This should hold all Logic to do with Ore and Maybe all functions associated with those systems
 // Also World Generation!!!
-use bevy::{math::vec3, prelude::*, render::texture, transform::commands, utils::hashbrown::HashSet};
+use bevy ::{math::vec3, prelude::*, render::texture, transform::commands, utils::hashbrown::HashSet};
 use noise::Perlin;
 use noise::NoiseFn;
-use rand::Rng;
+use rand ::Rng;
 
 
 pub struct OreLogicPlugin;
@@ -17,18 +17,18 @@ impl Plugin for OreLogicPlugin {
 
 // Below was built using the 2d Sprite Sheets demo from assets
 // Below is the Map Details
-const MAPHIGHT: usize = 80;
-const MAPWIDTH: usize = 80;
+const MAPHIGHT          : usize = 80;
+const MAPWIDTH          : usize = 80;
 
 // Sprite Details 
-const TILE_HEIGHT: usize = 64;
-const TILE_WIDTH: usize = 64;
+const TILE_HEIGHT       : usize = 64;
+const TILE_WIDTH        : usize = 64;
 const SPRITESHEET_HEIGHT: usize = 128 / TILE_HEIGHT;
-const SPRITESHEET_WIDTH: usize = 640 / TILE_WIDTH;
-const TEXTURE_PATH: &str = "terra/terrain.png";
-const SPRITESCALE: usize = 4;
+const SPRITESHEET_WIDTH : usize = 640 / TILE_WIDTH;
+const TEXTURE_PATH      : &str  = "terra/terrain.png";
+const SPRITESCALE       : usize = 4;
 // Perlin Noise scale
-const NOISE_SCALE: f64 = 10.5;
+const NOISE_SCALE       : f64   = 10.5;
 
 fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_atlases: ResMut<Assets<TextureAtlas>>,
 ) {
@@ -67,15 +67,11 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
                 texture_atlas: texture_atlas_handle.clone(),
                 sprite: TextureAtlasSprite::new(tile),
                 transform: Transform::from_scale(Vec3::splat(SPRITESCALE as f32)).with_translation(vec3(x, y, 0.0)),
-                
-                ..default()
-                
-            },
-    
+                ..default()                
+            },    
         ))
         ;
     }
-
 }
 
 fn get_tile((x, y): (i32, i32), occupied: &HashSet<(i32, i32)>) -> usize {
@@ -96,9 +92,7 @@ fn get_tile((x, y): (i32, i32), occupied: &HashSet<(i32, i32)>) -> usize {
 
         _ => 0
     };
-    tile
-
-    
+    tile    
 }
 
 
