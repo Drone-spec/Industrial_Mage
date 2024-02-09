@@ -9,7 +9,8 @@ pub struct EntityLogic;
 
 impl Plugin for EntityLogic {
     fn build(&self, app: &mut App) {
-    app.add_systems(Startup, spawn_goblin);
+    app.add_systems(Startup, spawn_goblin)
+    .add_systems(Update, (health_regen, mana_regen));
     }
 }
 
@@ -42,13 +43,13 @@ struct BasicGoblin {
     mana: Mana,
     movingobjbun: MovingObjectBundle,
 }
-fn health_regen(mut query: Query<(&mut Health)>, time: Res<Time>){
+fn health_regen(mut query: Query<(Entity, &mut Health)>, time: Res<Time>){
     
-    for (mut Health) in query.iter_mut()
+    for (Entity, mut Health) in query.iter_mut()
     {
         if Health.regen == true {
             Health.amount += Health.regenamount * time.delta_seconds ();
-            info!("Entity: {:?} is at Position {:?}", Entity, transform.translation);
+            info!("Entity: {:?} is at has {:?} Health!", Entity, Health.amount);
         } 
         
     }
@@ -56,13 +57,13 @@ fn health_regen(mut query: Query<(&mut Health)>, time: Res<Time>){
 }
 
 #[allow(dead_code)]
-fn mana_regen(mut query: Query<(&mut Mana)>, time: Res<Time>) {
+fn mana_regen(mut query: Query<(Entity, &mut Mana)>, time: Res<Time>) {
     
-    for (mut Mana) in query.iter_mut()
+    for (Entity, mut Mana) in query.iter_mut()
     {
         if Mana.regen == true {
             Mana.amount += Mana.regenamount * time.delta_seconds ();
-            info!("Entity: {:?} is at has {:?}", Entity, Mana.amount);
+            info!("Entity: {:?} is at has {:?} Mana!", Entity, Mana.amount);
         } 
         
     }
@@ -80,13 +81,13 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
                 amount: 100.0,
                 max: 100.0,
                 regen: true,
-                regenamount: 0.0
+                regenamount: 1.0
             },
             mana: Mana{
                 amount: 0.0,
                 max: 100.0,
                 regen: true,
-                regenamount: 5.0
+                regenamount: 1.0
             },
             movingobjbun: MovingObjectBundle {
                 velocity: Velocity::new(Vec3::ZERO),
