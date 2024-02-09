@@ -2,6 +2,8 @@ use bevy::{prelude::*, transform};
 
 use crate::wizard::*;
 
+
+#[allow(dead_code)]
 pub struct DebugPlugin;
 
 impl Plugin for DebugPlugin {

@@ -5,7 +5,7 @@ use bevy::{math::vec3, prelude::*, render::texture, transform::commands, utils::
 use noise::Perlin;
 use noise::NoiseFn;
 use rand::Rng;
-
+#[allow(dead_code)]
 
 pub struct OreLogicPlugin;
 

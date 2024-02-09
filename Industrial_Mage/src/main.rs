@@ -2,7 +2,7 @@
 
 use bevy::prelude::*;
 
-
+#[allow(dead_code)]
 
 mod forge;
 mod ore;

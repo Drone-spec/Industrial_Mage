@@ -1,7 +1,9 @@
 use bevy::ecs::bundle;
+use std::*;
 // This should have all logic that details out Goblins and Goblin behavior.
 use bevy::prelude::*;
 use crate::wizard::*;
+#[allow(dead_code)]
 use crate::movement::{Acceleration, MovingObjectBundle, Velocity};
 pub struct EntityLogic;
 
@@ -14,19 +16,19 @@ impl Plugin for EntityLogic {
 
 #[derive(Component, Debug)]
 pub struct Health {
-    pub amount: f64,
-    pub max: f64,
+    pub amount: f32,
+    pub max: f32,
     pub regen: bool,
-    pub regenamount: f64,
+    pub regenamount: f32,
 }
 
 
 #[derive(Component, Debug)]
 pub struct Mana {
-    pub amount: f64,
-    pub max: f64,
+    pub amount: f32,
+    pub max: f32,
     pub regen: bool,
-    pub regenamount: f64,
+    pub regenamount: f32,
 }
 
 
@@ -40,6 +42,31 @@ struct BasicGoblin {
     mana: Mana,
     movingobjbun: MovingObjectBundle,
 }
+fn health_regen(mut query: Query<(&mut Health)>, time: Res<Time>){
+    
+    for (mut Health) in query.iter_mut()
+    {
+        if Health.regen == true {
+            Health.amount += Health.regenamount * time.delta_seconds ();
+            info!("Entity: {:?} is at Position {:?}", Entity, transform.translation);
+        } 
+        
+    }
+
+}
+
+#[allow(dead_code)]
+fn mana_regen(mut query: Query<(&mut Mana)>, time: Res<Time>) {
+    
+    for (mut Mana) in query.iter_mut()
+    {
+        if Mana.regen == true {
+            Mana.amount += Mana.regenamount * time.delta_seconds ();
+            info!("Entity: {:?} is at has {:?}", Entity, Mana.amount);
+        } 
+        
+    }
+} 
 
 
 
@@ -56,7 +83,7 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
                 regenamount: 0.0
             },
             mana: Mana{
-                amount: 100.0,
+                amount: 0.0,
                 max: 100.0,
                 regen: true,
                 regenamount: 5.0

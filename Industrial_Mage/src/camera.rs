@@ -9,6 +9,8 @@ use bevy::{
 };
 use bevy_pancam::{PanCam, PanCamPlugin};
 
+#[allow(dead_code)]
+
 pub struct CameraLogic;
 
 impl Plugin for CameraLogic {
