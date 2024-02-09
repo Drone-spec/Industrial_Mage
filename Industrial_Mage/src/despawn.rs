@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-const DESPAWN_DISTANCE: f32 = 100000.0;
+const DESPAWN_DISTANCE: f32 = 1.0;
 
 #[allow(dead_code)]
 
