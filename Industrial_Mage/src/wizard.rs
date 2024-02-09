@@ -1,7 +1,7 @@
-use std::arch::x86_64::_MM_FLUSH_ZERO_OFF;
+//use std::arch::x86_64::_MM_FLUSH_ZERO_OFF;
 
-use bevy::{input::mouse, math::vec3, prelude::*, transform, ui::update};
-use crate::movement::{self, *};
+use bevy::{/*input::mouse, math::vec3,*/ prelude::*, /*transform, ui::update*/};
+use crate::movement::*/*{self, *}*/;
 
 pub const STARTING_TRANSLATION      : Vec3 = Vec3::new(500., 0., 1.);
 const WIZARD_SPEED                  : f32  = 250.0;
@@ -65,7 +65,7 @@ fn wizard_movement_controls(mut query: Query<(&mut Transform, &mut Velocity), Wi
     }
     else
     {
-        velocity.value = (transform.back() + transform.forward());
+        velocity.value = transform.back() + transform.forward();
     }
 }
 

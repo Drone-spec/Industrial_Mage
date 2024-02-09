@@ -1,13 +1,13 @@
 // This should have all logic that details out Goblins and Goblin behavior.
 use bevy::{
     core_pipeline::{
-        bloom::{BloomCompositeMode, BloomSettings},
+        bloom::{/*BloomCompositeMode,*/ BloomSettings},
         tonemapping::Tonemapping,
     },
     prelude::*,
-    sprite::MaterialMesh2dBundle,
+    //sprite::MaterialMesh2dBundle,
 };
-use bevy_pancam::{PanCam, PanCamPlugin};
+use bevy_pancam::{PanCam, /*PanCamPlugin*/};
 
 pub struct CameraLogic;
 

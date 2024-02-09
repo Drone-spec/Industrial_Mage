@@ -1,9 +1,5 @@
 //! Renders a 2D scene containing a single, moving sprite.
 
-use bevy::prelude::*;
-
-
-
 mod forge;
 mod ore;
 mod movement;
