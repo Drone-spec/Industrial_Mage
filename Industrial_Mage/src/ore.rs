@@ -4,13 +4,8 @@ use bevy::sprite::collide_aabb::Collision;
 use bevy ::{math::vec3, prelude::*, render::texture, transform::commands, utils::hashbrown::HashSet};
 use noise::Perlin;
 use noise::NoiseFn;
-<<<<<<< HEAD
-use rand::Rng;
-#[allow(dead_code)]
-=======
 use rand ::Rng;
-
->>>>>>> origin/dev
+#[allow(dead_code)]
 
 pub struct OreLogicPlugin;
 
