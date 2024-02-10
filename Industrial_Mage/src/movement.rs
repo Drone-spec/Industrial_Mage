@@ -59,6 +59,4 @@ pub fn update_position(mut query: Query<(&Velocity, &mut Transform)>, time: Res<
     }
 }
 
-#[derive(Component,Debug)]
-pub struct MoveToWizard;
 
