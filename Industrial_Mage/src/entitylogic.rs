@@ -8,11 +8,15 @@ use crate::movement::{Acceleration, MovingObjectBundle, Velocity};
 pub struct EntityLogic;
 
 #[derive(Resource)]
-pub struct RegenTimer(Timer);
+pub struct HealthRegenTimer(Timer);
+#[derive(Resource)]
+pub struct ManaRegenTimer(Timer);
+
 
 impl Plugin for EntityLogic {
     fn build(&self, app: &mut App) {
-    app.insert_resource(RegenTimer(Timer::from_seconds(2.0, TimerMode::Repeating)))
+    app.insert_resource(HealthRegenTimer(Timer::from_seconds(2.0, TimerMode::Repeating)))
+    .insert_resource(ManaRegenTimer(Timer::from_seconds(2.0, TimerMode::Repeating)))
     .add_systems(Startup, spawn_goblin)
     .add_systems(Update, health_regen)
     .add_systems(Update, mana_regen)
@@ -43,6 +47,20 @@ pub struct Mana {
 pub struct Goblin;
 
 
+#[derive(Component, Debug)]
+pub struct Building;
+
+
+#[derive(Component, Debug)]
+pub struct House;
+
+#[derive(Component, Debug)]
+pub struct Defense;
+
+#[derive(Component, Debug)]
+pub struct Enemy;
+
+
 #[derive(Bundle)]
 struct BasicGoblin {
     health: Health,
@@ -55,7 +73,7 @@ struct BasicGoblin {
 /// It just Query's for every Entity with Health and the pull Time and the Resource time.
 /// If Resource time has passed its value then run the below System That system will see if Regen is enabled and then ask the entity
 /// what its regen amount is and apply that to the main amount for that entity.
-fn health_regen(mut query: Query<(Entity, &mut Health)>, time: Res<Time>, mut timer: ResMut<RegenTimer>){
+fn health_regen(mut query: Query<(Entity, &mut Health)>, time: Res<Time>, mut timer: ResMut<HealthRegenTimer>){
     if timer.0.tick(time.delta()).just_finished() {
         for (Entity, mut Health) in query.iter_mut()
         {   
@@ -84,7 +102,7 @@ fn health_regen(mut query: Query<(Entity, &mut Health)>, time: Res<Time>, mut ti
 }
 
 #[allow(dead_code)]
-fn mana_regen(mut query: Query<(Entity, &mut Mana)>, time: Res<Time>, mut timer:ResMut<RegenTimer>) {
+fn mana_regen(mut query: Query<(Entity, &mut Mana)>, time: Res<Time>, mut timer:ResMut<ManaRegenTimer>) {
     if timer.0.tick(time.delta()).just_finished() {
         for (Entity, mut Mana) in query.iter_mut()
         {
