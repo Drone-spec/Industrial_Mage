@@ -51,6 +51,8 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
                 continue;
             } else {
                 
+                // TODO: Add Ore spawns into the map..
+                // Maybe try if mapvar < 0.3 < 0.32 or something
             }
             // THIS IS JUST A DEBUG MESSAGE DO NOT LEAVE IN
             //println!("{}", mapvar);
@@ -108,3 +110,5 @@ fn grid_to_world(x: f32, y: f32) -> (f32, f32){
         y * TILE_HEIGHT as f32 * SPRITESCALE as f32
     )
 }
+
+
