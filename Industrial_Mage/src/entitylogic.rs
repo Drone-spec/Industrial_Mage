@@ -1,4 +1,4 @@
-use bevy::ecs::bundle;
+use bevy::{ecs::bundle, transform};
 use std::*;
 // This should have all logic that details out Goblins and Goblin behavior.
 use bevy::prelude::*;
@@ -20,6 +20,7 @@ impl Plugin for EntityLogic {
     .add_systems(Startup, spawn_goblin)
     .add_systems(FixedUpdate, health_regen)
     .add_systems(Update, mana_regen)
+    .add_systems(Update, enemy_update)
     ;
     }
 }
@@ -58,8 +59,9 @@ pub struct House;
 pub struct Defense;
 
 #[derive(Component, Debug)]
-pub struct Enemy;
-
+pub struct Enemy{
+    speed: f32,
+}
 
 #[derive(Bundle)]
 struct BasicGoblin {
@@ -162,7 +164,9 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
             },
         },
     ));
-    commands.spawn((BasicGoblin 
+    commands.spawn((
+        
+        BasicGoblin 
         {
             health: Health{
                 amount: 50.0,
@@ -187,6 +191,33 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
             },
         },
     ));
+    commands.spawn((BasicGoblin 
+        {
+            health: Health{
+                amount: 50.0,
+                max: 100.0,
+                regen: true,
+                regenamount: 1.0
+            },
+            mana: Mana{
+                amount: 0.0,
+                max: 100.0,
+                regen: true,
+                regenamount: 1.0
+            },
+            movingobjbun: MovingObjectBundle {
+                velocity: Velocity::new(Vec3::ZERO),
+                acceleration: Acceleration::new(Vec3::ZERO),
+                model: SpriteBundle{
+                    texture: asset_server.load("goblinhole/goblin.png"),
+                    transform: Transform::from_translation(Vec3::new(0.0, 0.0, 10.0)),
+                    ..default()
+                }
+            },
+        },
+        // This looks like shit but maybe we can improve it later...
+        Enemy{speed: 50.0}
+    ));
 }
 
 
@@ -194,3 +225,23 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
 fn spawn_goblinhome(){
 
 }
+
+// Attempting to follow a guide and make it so the creatures follow and die tooo.
+fn enemy_update(time:Res<Time>,
+    mut find_enemy:Query<(&Enemy, &mut Transform,Entity,&Health),Without<Wizard>>,
+    mut find_wizard:Query<(&Wizard, &mut Transform),Without<Enemy>>,
+    mut commands: Commands) {
+        if let Ok((_wizard_movement,wizard_transform)) = find_wizard.get_single()
+        {
+            for(enemy, mut transform,entity,health) in find_enemy.iter_mut()
+            {
+                let moving = Vec3::normalize(wizard_transform.translation-transform.translation)*enemy.speed*time.delta_seconds();
+                transform.translation+=moving;
+
+                if health.amount <=0.
+                {
+                    commands.entity(entity).despawn();
+                }
+            }
+        }
+    }
