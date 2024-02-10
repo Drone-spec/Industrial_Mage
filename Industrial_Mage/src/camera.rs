@@ -29,9 +29,9 @@ fn setupcamera(mut commands: Commands) {
                 ..default()
             },
             tonemapping: Tonemapping::TonyMcMapface, // 2. Using a tonemapper that desaturates to white is recommended
-            ..default()
-        },
-        BloomSettings::default(), // 3. Enable bloom for the camera
+            ..default()},
+        BloomSettings{
+            ..default()}, // 3. Enable bloom for the camera
     )).insert(PanCam::default());
 }
 

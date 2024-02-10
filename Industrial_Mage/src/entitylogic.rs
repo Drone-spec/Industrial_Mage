@@ -18,7 +18,7 @@ impl Plugin for EntityLogic {
     app.insert_resource(HealthRegenTimer(Timer::from_seconds(2.0, TimerMode::Repeating)))
     .insert_resource(ManaRegenTimer(Timer::from_seconds(2.0, TimerMode::Repeating)))
     .add_systems(Startup, spawn_goblin)
-    .add_systems(Update, health_regen)
+    .add_systems(FixedUpdate, health_regen)
     .add_systems(Update, mana_regen)
     ;
     }
