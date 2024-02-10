@@ -209,7 +209,7 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
                 velocity: Velocity::new(Vec3::ZERO),
                 acceleration: Acceleration::new(Vec3::ZERO),
                 model: SpriteBundle{
-                    texture: asset_server.load("goblinhole/goblin.png"),
+                    texture: asset_server.load("goblinhole/evilgoblin.png"),
                     transform: Transform::from_translation(Vec3::new(0.0, 0.0, 10.0)),
                     ..default()
                 }
@@ -222,6 +222,7 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
 
 
 // This will spawn a home which will increase the amount of goblins
+// Maybe this should also be a build item for the wizard?
 fn spawn_goblinhome(){
 
 }
