@@ -3,7 +3,7 @@ use std::arch::x86_64::_MM_FLUSH_ZERO_OFF;
 use bevy::{input::mouse, math::vec3, prelude::*, transform, ui::update};
 use crate::movement::{self, *};
 #[allow(dead_code)]
-pub const STARTING_TRANSLATION      : Vec3 = Vec3::new(500., 0., 1.);
+pub const STARTING_TRANSLATION      : Vec3 = Vec3::new(500., 0., 10.);
 const WIZARD_SPEED                  : f32  = 250.0;
 const SPELL_SPEED                   : f32  = 500.0;
 const SPELL_FORWARD_SPAWN_SCALAR    : f32  =  30.0;
