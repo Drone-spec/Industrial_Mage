@@ -15,6 +15,18 @@ impl Plugin for OreLogicPlugin {
     }
 }
 
+struct Tile {
+    pos: (i32, i32),
+    sprite: usize,
+    z_index: i32,
+}
+
+impl Tile {
+    fn new(pos: (i32, i32), sprite: usize, z_index: i32) -> Self {
+        Self { pos, sprite, z_index}
+    }
+    
+}
 // Below was built using the 2d Sprite Sheets demo from assets
 // Below is the Map Details
 const MAPHIGHT          : usize = 80;
@@ -50,37 +62,44 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
     let perlin: Perlin = Perlin::new(rngseed.gen());
     
 
-    let mut tiles = HashSet::new();
+    let mut tiles = Vec::new();
+    let mut occupied = HashSet::new();
     for x in 0..MAPHIGHT{
         for y in 0..MAPWIDTH {
             let mapvar = perlin.get([x as f64 / NOISE_SCALE, y as f64 / NOISE_SCALE]);
-            if mapvar < 0.2 {
-                // Make this Value The hard rock!
-                continue;
-            } else {
-                
-                // TODO: Add Ore spawns into the map..
-                // Maybe try if mapvar < 0.3 < 0.32 or something
+            let (x, y) = (x as i32, y as i32);
+            
+            // Basic Ground tiles selection
+            if mapvar > 0.2 {
+                occupied.insert((x ,y));
+                }
+
+            if mapvar > 0.3 && mapvar <0.35 {
+                tiles.push(Tile::new((x,y), 5, 2))
             }
             // THIS IS JUST A DEBUG MESSAGE DO NOT LEAVE IN
             //println!("{}", mapvar);
-            tiles.insert((x as i32, y as i32));
+            
         }
     }
 
-    for (x, y) in tiles.iter() {
-        let (tile, neightbor_count) = get_tile((*x, *y), &tiles);
-        let (x, y) = grid_to_world(*x as f32, *y as f32);
-
-        if neightbor_count == 1{
+    for (x,y) in occupied.iter() {
+        let (tile, neighbor_count) = get_tile((*x, *y), &occupied);
+        if neighbor_count == 1 {
             continue;
         }
+        tiles.push(Tile::new((*x, *y), tile, 0))
+    }
+
+    for tile in tiles.iter() {
+        let (x,y) = tile.pos;
+        let (x, y) = grid_to_world(x as f32, y as f32);
         
         commands.spawn((
             SpriteSheetBundle {
                 texture_atlas: texture_atlas_handle.clone(),
-                sprite: TextureAtlasSprite::new(tile),
-                transform: Transform::from_scale(Vec3::splat(SPRITESCALE as f32)).with_translation(vec3(x, y, 0.0)),
+                sprite: TextureAtlasSprite::new(tile.sprite),
+                transform: Transform::from_scale(Vec3::splat(SPRITESCALE as f32)).with_translation(vec3(x, y, tile.z_index as f32)),
                 ..default()                
             },    
         ))
