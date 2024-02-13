@@ -45,7 +45,7 @@ pub fn spawn_wizard(mut commands: Commands, asset_server: Res<AssetServer> )
 
 fn wizard_movement_controls(mut query: Query<(&mut Transform, &mut Velocity), With<Wizard>>, keyboard_input: Res<Input<KeyCode>>) 
 {
-    let(transform, mut velocity) = query.single_mut();
+    let(mut transform, mut velocity) = query.single_mut();
 
         if keyboard_input.pressed(KeyCode::S)
     {
@@ -57,10 +57,14 @@ fn wizard_movement_controls(mut query: Query<(&mut Transform, &mut Velocity), Wi
     }
     else if keyboard_input.pressed(KeyCode::A)
     {
-        velocity.value = transform.left() * WIZARD_SPEED;
+        // Rotation changes which way the sprite faces.
+        transform.rotation = Quat::from_rotation_y(std::f32::consts::PI);
+        velocity.value = transform.right() * WIZARD_SPEED;
     } 
     else if keyboard_input.pressed(KeyCode::D)
     {
+        // Rotation is to tell the Sprite which way to face~!
+        transform.rotation = Quat::default();
         velocity.value = transform.right() * WIZARD_SPEED;
     }
     else

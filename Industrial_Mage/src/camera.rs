@@ -9,6 +9,8 @@ use bevy::{
 };
 use bevy_pancam::{PanCam, /*PanCamPlugin*/};
 
+#[allow(dead_code)]
+
 pub struct CameraLogic;
 
 impl Plugin for CameraLogic {
@@ -27,9 +29,9 @@ fn setupcamera(mut commands: Commands) {
                 ..default()
             },
             tonemapping: Tonemapping::TonyMcMapface, // 2. Using a tonemapper that desaturates to white is recommended
-            ..default()
-        },
-        BloomSettings::default(), // 3. Enable bloom for the camera
+            ..default()},
+        BloomSettings{
+            ..default()}, // 3. Enable bloom for the camera
     )).insert(PanCam::default());
 }
 

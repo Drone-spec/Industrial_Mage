@@ -3,6 +3,7 @@ use bevy::{ecs::component, prelude::*};
 use noise::core::value;
 //Movement should all be handled here
 pub struct MovementPlugin;
+#[allow(dead_code)]
 
 impl Plugin for MovementPlugin {
     fn build(&self, app: &mut App) {
@@ -57,3 +58,5 @@ pub fn update_position(mut query: Query<(&Velocity, &mut Transform)>, time: Res<
         
     }
 }
+
+

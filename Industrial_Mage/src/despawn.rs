@@ -2,6 +2,8 @@ use bevy::prelude::*;
 
 const DESPAWN_DISTANCE: f32 = 1.0;
 
+#[allow(dead_code)]
+
 pub struct DespawnPlugin;
 
 impl Plugin for DespawnPlugin
