@@ -69,7 +69,8 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>, mut texture
     commands.spawn(SpriteSheetBundle
     {
         texture_atlas:texture_atlas_handle,
-        transform:Transform::from_scale(Vec3::splat(5.0)),
+        transform:Transform::from_scale(Vec3::splat(1.0)),
+        // This above from_scale is what handled the SIZE of the sprite.
         ..default()
     }) 
     .insert(animation::Animator

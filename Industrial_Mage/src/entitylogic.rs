@@ -88,19 +88,19 @@ fn health_regen(mut query: Query<(Entity, &mut Health)>, time: Res<Time>, mut ti
                 true =>
                 if Health.max > Health.amount {
                     Health.amount += Health.regenamount + (time.delta_seconds() * 2.0);
-                    info!("Entity: {:?} is at {:?}% Health!", Entity, ((Health.amount / Health.max) * 100.00));
+                    info!("Entity: {:?} is at {:.2}% Health!", Entity, ((Health.amount / Health.max) * 100.00));
                 }
                 else 
                 {
-                    info!("Entity: {:?} is at has max Health! {:?}", Entity, ((Health.amount / Health.max) * 100.00));
+                    info!("Entity: {:?} is at has max Health! {:.2}", Entity, ((Health.amount / Health.max) * 100.00));
                 },
                 false => 
                 if Health.max > Health.amount {
-                    info!("Entity: {:?} is at {:?} Health and Regen is hindered!", Entity, ((Health.amount / Health.max) * 100.00));
+                    info!("Entity: {:?} is at {:.2} Health and Regen is hindered!", Entity, ((Health.amount / Health.max) * 100.00));
                 }   
                 else
                 {
-                    info!("Entity: {:?} is at {:?} Health! Regen is hindered", Entity, ((Health.amount / Health.max) * 100.00));
+                    info!("Entity: {:?} is at {:.2} Health! Regen is hindered", Entity, ((Health.amount / Health.max) * 100.00));
                 },
                 _ => info!("How did you get here? Error at True False in health_regen") 
             }
@@ -117,19 +117,19 @@ fn mana_regen(mut query: Query<(Entity, &mut Mana)>, time: Res<Time>, mut timer:
                 true =>
                 if Mana.max > Mana.amount {
                     Mana.amount += Mana.regenamount + (time.delta_seconds() * 2.0);
-                    info!("Entity: {:?} is at {:?} Mana!", Entity, Mana.amount);
+                    info!("Entity: {:?} is at {:.2} Mana!", Entity, Mana.amount);
                 }
                 else 
                 {
-                    info!("Entity: {:?} is at has max Mana! {:?}", Entity, Mana.amount);
+                    info!("Entity: {:?} is at has max Mana! {:.2}", Entity, Mana.amount);
                 },
                 false => 
                 if Mana.max > Mana.amount {
-                    info!("Entity: {:?} is at {:?} Mana and Regen is hindered!", Entity, Mana.amount);
+                    info!("Entity: {:?} is at {:.2} Mana and Regen is hindered!", Entity, Mana.amount);
                 }   
                 else
                 {
-                    info!("Entity: {:?} is at {:?} Mana! Regen is hindered", Entity, Mana.amount);
+                    info!("Entity: {:?} is at {:.2} Mana! Regen is hindered", Entity, Mana.amount);
                 },
                 _ => info!("How did you get here? Error at True False in Mana_regen") 
             }
