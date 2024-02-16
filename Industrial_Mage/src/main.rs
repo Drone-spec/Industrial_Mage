@@ -44,7 +44,7 @@ pub fn create_staff_anim_hashmap() -> HashMap<String,animation::Animation>
 {
     let mut hash_map = HashMap::new();
 
-    hash_map.insert("Shoot".to_string(), animation::Animation{start:1,end:3,looping:false,cooldown:0.1}); // something is wrong with the png sprite
+    hash_map.insert("Shoot".to_string(), animation::Animation{start:1,end:1,looping:false,cooldown:0.1}); // something is wrong with the png sprite
 
     hash_map.insert("Idle".to_string(), animation::Animation{start:1,end:1,looping:true,cooldown:0.1});
 
@@ -57,15 +57,15 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>, mut texture
     let mut texture_atlas = TextureAtlas::from_grid
     (
         texture_handle,
-        Vec2::new(8.0+1.0, 9.0+1.0),
-        3,
+        Vec2::new(14.5, 12.),
+        5,
         1,
         Some(Vec2::new(1.,1.)), 
         None,
     );
 
     let texture_atlas_handle = texture_atlases.add(texture_atlas);
-    commands.spawn(Camera2dBundle::default());
+    //commands.spawn(Camera2dBundle::default());
     commands.spawn(SpriteSheetBundle
     {
         texture_atlas:texture_atlas_handle,
@@ -80,5 +80,5 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>, mut texture
         current_animation: "Shoot".to_string(),
         animation_bank: create_staff_anim_hashmap(),
     })
-    .insert(player_attach::PlayerAttach{offset:Vec2::new(15.,-5.)});//.insert(staff::StaffController{shoot_cooldown:0.3, shoot_timer:0.});
+    .insert(player_attach::PlayerAttach{offset:Vec2::new(50.,10.)});//.insert(staff::StaffController{shoot_cooldown:0.3, shoot_timer:0.});
 }
