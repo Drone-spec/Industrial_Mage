@@ -1,12 +1,12 @@
 //use std::arch::x86_64::_MM_FLUSH_ZERO_OFF;
 
-use bevy::{/*input::mouse, math::vec3,*/ prelude::*, /*transform, ui::update*/};
-use crate::movement::*/*{self, *}*/;
+use bevy::{/*input::mouse, math::vec3,*/ ecs::system::EntityCommands, math::vec2, prelude::* /*transform, ui::update*/};
+use crate::{movement::*, player_attach::{PlayerAttach,self}}/*{self, *}*/;
 
-pub const STARTING_TRANSLATION      : Vec3 = Vec3::new(500., 0., 1.);
-const WIZARD_SPEED                  : f32  = 250.0;
-const SPELL_SPEED                   : f32  = 500.0;
-const SPELL_FORWARD_SPAWN_SCALAR    : f32  =  30.0;
+pub const STARTING_TRANSLATION  : Vec3 = Vec3::new(500., 0., 1.);
+const WIZARD_SPEED              : f32  = 250.0;
+const SPELL_SPEED               : f32  = 500.0;
+const SPELL_FORWARD_SPAWN_SCALAR: f32  =  30.0;
 
 // All Wizard stuff should be in here..
 pub struct WizardPlugin;
@@ -30,11 +30,11 @@ pub fn spawn_wizard(mut commands: Commands, asset_server: Res<AssetServer> )
  {
     commands.spawn((MovingObjectBundle 
         {
-            velocity: Velocity::new(Vec3::ZERO),
+            velocity    : Velocity::new(Vec3::ZERO),
             acceleration: Acceleration::new(Vec3::ZERO),
-            model: SpriteBundle
+            model       : SpriteBundle
             {
-                texture: asset_server.load("wiznerd/Wizard.png"),
+                texture  : asset_server.load("wiznerd/Wizard.png"),
                 transform: Transform::from_translation(STARTING_TRANSLATION),
                 ..default()
             },
@@ -81,9 +81,9 @@ fn wizard_weapon_controls(mut commands: Commands, query: Query<&Transform, With<
     {
         commands.spawn((MovingObjectBundle
         {
-            velocity: Velocity::new(transform.right() * SPELL_SPEED),
+            velocity    : Velocity::new(transform.right() * SPELL_SPEED),
             acceleration: Acceleration::new(Vec3::ZERO),
-            model: SpriteBundle
+            model       : SpriteBundle
             {
                 texture: asset_server.load("wiznerd/fireball.png"),
                 transform: Transform::from_translation(transform.translation + transform.right() * SPELL_FORWARD_SPAWN_SCALAR),
