@@ -71,6 +71,11 @@ struct BasicGoblin {
 }
 
 
+
+
+
+
+
 /// The Health and Mana system work the exact same!!
 /// It just Query's for every Entity with Health and the pull Time and the Resource time.
 /// If Resource time has passed its value then run the below System That system will see if Regen is enabled and then ask the entity
@@ -83,19 +88,19 @@ fn health_regen(mut query: Query<(Entity, &mut Health)>, time: Res<Time>, mut ti
                 true =>
                 if Health.max > Health.amount {
                     Health.amount += Health.regenamount + (time.delta_seconds() * 2.0);
-                    info!("Entity: {:?} is at {:?} Health!", Entity, Health.amount);
+                    info!("Entity: {:?} is at {:?}% Health!", Entity, ((Health.amount / Health.max) * 100.00));
                 }
                 else 
                 {
-                    info!("Entity: {:?} is at has max Health! {:?}", Entity, Health.amount);
+                    info!("Entity: {:?} is at has max Health! {:?}", Entity, ((Health.amount / Health.max) * 100.00));
                 },
                 false => 
                 if Health.max > Health.amount {
-                    info!("Entity: {:?} is at {:?} Health and Regen is hindered!", Entity, Health.amount);
+                    info!("Entity: {:?} is at {:?} Health and Regen is hindered!", Entity, ((Health.amount / Health.max) * 100.00));
                 }   
                 else
                 {
-                    info!("Entity: {:?} is at {:?} Health! Regen is hindered", Entity, Health.amount);
+                    info!("Entity: {:?} is at {:?} Health! Regen is hindered", Entity, ((Health.amount / Health.max) * 100.00));
                 },
                 _ => info!("How did you get here? Error at True False in health_regen") 
             }
@@ -145,7 +150,7 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
                 amount: 50.0,
                 max: 100.0,
                 regen: true,
-                regenamount: 1.0
+                regenamount: 3.0
             },
             mana: Mana{
                 amount: 0.0,
@@ -172,7 +177,7 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
                 amount: 50.0,
                 max: 100.0,
                 regen: true,
-                regenamount: 1.0
+                regenamount: 2.0
             },
             mana: Mana{
                 amount: 0.0,
@@ -195,9 +200,9 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
         {
             health: Health{
                 amount: 50.0,
-                max: 100.0,
+                max: 300.0,
                 regen: true,
-                regenamount: 1.0
+                regenamount: 10.0
             },
             mana: Mana{
                 amount: 0.0,
