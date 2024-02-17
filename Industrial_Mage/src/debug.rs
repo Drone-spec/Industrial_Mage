@@ -1,6 +1,6 @@
 use bevy::{prelude::*, /*transform*/};
 
-use crate::wizard::*;
+//use crate::wizard::*;
 
 
 #[allow(dead_code)]
@@ -13,10 +13,10 @@ impl Plugin for DebugPlugin {
 }
 
 
-pub fn debug_print_position(query: Query<(Entity, &Transform, With<Wizard>)>) {
+pub fn debug_print_position(/*query: Query<(Entity, &Transform, With<Wizard>)>*/) {
 
-    for (entity, transform, wizard) in query.iter() {
+    /*for (entity, transform, wizard) in query.iter() {
         //info!("Entity: {:?} is at Position {:?}", entity, transform.translation);
         
-    }
+    }*/
 }

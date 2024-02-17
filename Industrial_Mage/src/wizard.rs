@@ -1,7 +1,8 @@
 //use std::arch::x86_64::_MM_FLUSH_ZERO_OFF;
 
-use bevy::{/*input::mouse, math::vec3,*/ ecs::system::EntityCommands, math::vec2, prelude::* /*transform, ui::update*/};
-use crate::{movement::*, player_attach::{PlayerAttach,self}}/*{self, *}*/;
+//use bevy::{/*input::mouse, math::vec3,*/ ecs::system::EntityCommands, math::vec2, prelude::* /*transform, ui::update*/};
+use bevy::prelude::*;
+use crate::movement::*/* , player_attach::{PlayerAttach,self}}{self, *}*/;
 
 pub const STARTING_TRANSLATION  : Vec3 = Vec3::new(500., 0., 1.);
 const WIZARD_SPEED              : f32  = 250.0;
