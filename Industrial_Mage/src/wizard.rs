@@ -74,7 +74,10 @@ fn wizard_movement_controls(mut query: Query<(&mut Transform, &mut Velocity), Wi
     }
 }
 
-fn wizard_weapon_controls(mut commands: Commands, query: Query<&Transform, With<Wizard>>, keyboard_input: Res<Input<KeyCode>>, asset_server: Res<AssetServer>,)
+fn wizard_weapon_controls(mut commands: Commands, 
+    query: Query<&Transform, With<Wizard>>, 
+    keyboard_input: Res<Input<KeyCode>>, 
+    asset_server: Res<AssetServer>,)
 {
     let transform = query.single();
 
