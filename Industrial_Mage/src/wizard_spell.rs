@@ -1,4 +1,4 @@
-use bevy::{ecs::entity, prelude::*};
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct Spell

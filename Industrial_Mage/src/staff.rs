@@ -1,6 +1,6 @@
-use bevy::{math::vec3, prelude::*, window::PrimaryWindow};
+use bevy::{prelude::*, window::PrimaryWindow};
 
-use crate::{animation::Animator, cursor_info::OffsetedCursorPostion, player_attach, wizard::Wizard, wizardSpell::Spell};
+use crate::{animation::Animator, cursor_info::OffsetedCursorPostion, wizard_spell::Spell};
 
 const SPELL_LIFETIME: f32 = 0.5;
 const SPELL_SPEED   : f32 = 1000.;

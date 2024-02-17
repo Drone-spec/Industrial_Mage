@@ -5,7 +5,7 @@ use bevy::prelude::*;
 
 
 #[derive(Component, Debug)]
-struct techlevel{
+struct tech_level{
     speed: f32,
     level: f32,
     experience: f32,

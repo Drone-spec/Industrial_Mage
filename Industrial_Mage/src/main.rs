@@ -1,6 +1,6 @@
 //! Renders a 2D scene containing a single, moving sprite.
 
-mod forge;
+//mod forge;
 mod ore;
 mod movement;
 mod wizard;
@@ -11,7 +11,7 @@ pub mod animation;
 pub mod player_attach;
 pub mod staff;
 pub mod cursor_info;
-pub mod wizardSpell;
+pub mod wizard_spell;
 //mod despawn;
 // Above loads the other files that will hold the functions and systems. We will need to use pub fn to call them outside of that function
 // MORE TO Follow
@@ -36,7 +36,9 @@ fn main() {
         .add_plugins(PanCamPlugin)
         //.add_plugins(DespawnPlugin)
         .add_plugins(EntityLogic)
-        .add_systems(Update, (close_on_esc, animation::animate_sprite, player_attach::attach_objects, staff::staff_controls, wizardSpell::update_spells))
+        .add_systems(Update,
+             (close_on_esc, animation::animate_sprite, player_attach::attach_objects,
+                       staff::staff_controls, wizard_spell::update_spells))
         .add_systems(Startup, setup)
         .insert_resource(Msaa::Off)
         .insert_resource(cursor_info::OffsetedCursorPostion{x:0.,y:0.})

@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::{animation::Animator, wizard::Wizard};
+use crate::{wizard::Wizard};
 
 #[derive(Component)]
 pub struct PlayerAttach
