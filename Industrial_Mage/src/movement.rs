@@ -1,6 +1,6 @@
 
-use bevy::{ecs::component, prelude::*};
-use noise::core::value;
+use bevy::prelude::*;//{ecs::component, prelude::*};
+//use noise::core::value;
 //Movement should all be handled here
 pub struct MovementPlugin;
 #[allow(dead_code)]

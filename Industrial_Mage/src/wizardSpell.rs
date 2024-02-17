@@ -14,7 +14,7 @@ pub fn update_spells(mut spell_query : Query<(&mut Spell, &mut Transform, Entity
     {
         spell.lifetime -= time.delta_seconds();
         let moving = spell.speed*spell.direction*time.delta_seconds();
-        transform.translation += Vec3::new(moving.x,moving.y,0.);
+        transform.translation += Vec3::new(moving.x,-moving.y,0.);
         if spell.lifetime <= 0.
         {
             commands.entity(entity).despawn();

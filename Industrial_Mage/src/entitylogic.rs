@@ -82,25 +82,25 @@ struct BasicGoblin {
 /// what its regen amount is and apply that to the main amount for that entity.
 fn health_regen(mut query: Query<(Entity, &mut Health)>, time: Res<Time>, mut timer: ResMut<HealthRegenTimer>){
     if timer.0.tick(time.delta()).just_finished() {
-        for (Entity, mut Health) in query.iter_mut()
+        for (entity, mut health) in query.iter_mut()
         {   
-            match Health.regen {
+            match health.regen {
                 true =>
-                if Health.max > Health.amount {
-                    Health.amount += Health.regenamount + (time.delta_seconds() * 2.0);
-                    info!("Entity: {:?} is at {:.2}% Health!", Entity, ((Health.amount / Health.max) * 100.00));
+                if health.max > health.amount {
+                    health.amount += health.regenamount + (time.delta_seconds() * 2.0);
+                    info!("Entity: {:?} is at {:.2}% Health!", entity, ((health.amount / health.max) * 100.00));
                 }
                 else 
                 {
-                    info!("Entity: {:?} is at has max Health! {:.2}", Entity, ((Health.amount / Health.max) * 100.00));
+                    info!("Entity: {:?} is at has max Health! {:.2}", entity, ((health.amount / health.max) * 100.00));
                 },
                 false => 
-                if Health.max > Health.amount {
-                    info!("Entity: {:?} is at {:.2} Health and Regen is hindered!", Entity, ((Health.amount / Health.max) * 100.00));
+                if health.max > health.amount {
+                    info!("Entity: {:?} is at {:.2} Health and Regen is hindered!", entity, ((health.amount / health.max) * 100.00));
                 }   
                 else
                 {
-                    info!("Entity: {:?} is at {:.2} Health! Regen is hindered", Entity, ((Health.amount / Health.max) * 100.00));
+                    info!("Entity: {:?} is at {:.2} Health! Regen is hindered", entity, ((health.amount / health.max) * 100.00));
                 },
                 _ => info!("How did you get here? Error at True False in health_regen") 
             }
@@ -111,25 +111,25 @@ fn health_regen(mut query: Query<(Entity, &mut Health)>, time: Res<Time>, mut ti
 #[allow(dead_code)]
 fn mana_regen(mut query: Query<(Entity, &mut Mana)>, time: Res<Time>, mut timer:ResMut<ManaRegenTimer>) {
     if timer.0.tick(time.delta()).just_finished() {
-        for (Entity, mut Mana) in query.iter_mut()
+        for (entity, mut mana) in query.iter_mut()
         {
-            match Mana.regen {
+            match mana.regen {
                 true =>
-                if Mana.max > Mana.amount {
-                    Mana.amount += Mana.regenamount + (time.delta_seconds() * 2.0);
-                    info!("Entity: {:?} is at {:.2} Mana!", Entity, Mana.amount);
+                if mana.max > mana.amount {
+                    mana.amount += mana.regenamount + (time.delta_seconds() * 2.0);
+                    info!("Entity: {:?} is at {:.2} Mana!", entity, mana.amount);
                 }
                 else 
                 {
-                    info!("Entity: {:?} is at has max Mana! {:.2}", Entity, Mana.amount);
+                    info!("Entity: {:?} is at has max Mana! {:.2}", entity, mana.amount);
                 },
                 false => 
-                if Mana.max > Mana.amount {
-                    info!("Entity: {:?} is at {:.2} Mana and Regen is hindered!", Entity, Mana.amount);
+                if mana.max > mana.amount {
+                    info!("Entity: {:?} is at {:.2} Mana and Regen is hindered!", entity, mana.amount);
                 }   
                 else
                 {
-                    info!("Entity: {:?} is at {:.2} Mana! Regen is hindered", Entity, Mana.amount);
+                    info!("Entity: {:?} is at {:.2} Mana! Regen is hindered", entity, mana.amount);
                 },
                 _ => info!("How did you get here? Error at True False in Mana_regen") 
             }
@@ -228,14 +228,17 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
 
 // This will spawn a home which will increase the amount of goblins
 // Maybe this should also be a build item for the wizard?
-fn spawn_goblinhome(){
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////
+fn spawn_goblinhome()
+{
 
 }
+*////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Attempting to follow a guide and make it so the creatures follow and die tooo.
 fn enemy_update(time:Res<Time>,
     mut find_enemy:Query<(&Enemy, &mut Transform,Entity,&Health),Without<Wizard>>,
-    mut find_wizard:Query<(&Wizard, &mut Transform),Without<Enemy>>,
+    find_wizard:Query<(&Wizard, &mut Transform),Without<Enemy>>,
     mut commands: Commands) {
         if let Ok((_wizard_movement,wizard_transform)) = find_wizard.get_single()
         {

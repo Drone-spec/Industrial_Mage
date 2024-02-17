@@ -7,7 +7,7 @@ use bevy::{
     prelude::*,
     //sprite::MaterialMesh2dBundle,
 };
-use bevy_pancam::{PanCam, /*PanCamPlugin*/};
+//use bevy_pancam::{PanCam, /*PanCamPlugin*/};
 
 #[allow(dead_code)]
 
@@ -32,6 +32,6 @@ fn setupcamera(mut commands: Commands) {
             ..default()},
         BloomSettings{
             ..default()}, // 3. Enable bloom for the camera
-    )).insert(PanCam::default());
+    ));//.insert(PanCam::default());
 }
 

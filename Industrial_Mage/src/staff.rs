@@ -1,6 +1,6 @@
-use bevy::{prelude::*,window::PrimaryWindow};
+use bevy::{math::vec3, prelude::*, window::PrimaryWindow};
 
-use crate::{animation::Animator, wizard::Wizard, cursor_info::OffsetedCursorPostion, wizardSpell::Spell};
+use crate::{animation::Animator, cursor_info::OffsetedCursorPostion, player_attach, wizard::Wizard, wizardSpell::Spell};
 
 const SPELL_LIFETIME: f32 = 0.5;
 const SPELL_SPEED   : f32 = 1000.;
@@ -56,7 +56,8 @@ pub fn staff_controls(mut cursor_res:ResMut<OffsetedCursorPostion>,
                 if buttons.pressed(MouseButton::Left)
                 {
                     let mut spawn_transform = Transform::from_scale(Vec3::splat(1.0));
-                    spawn_transform.translation = transform.translation;
+                    spawn_transform.translation = transform.translation;// + Vec3::new(0., 15., 0.);
+                    // ^^^^ this changes where the object spwans by adding the vec3 to it
                     spawn_transform.rotation = Quat::from_axis_angle(Vec3::new(0.,0.,1.), angle);
                     staff_controller.shoot_timer = staff_controller.shoot_cooldown;
                     commands.spawn(SpriteBundle
@@ -64,7 +65,7 @@ pub fn staff_controls(mut cursor_res:ResMut<OffsetedCursorPostion>,
                         transform:spawn_transform,
                         texture:asset_server.load("wiznerd/fireball.png"),
                         ..default()
-                    }).insert(Spell{lifetime:SPELL_LIFETIME,speed:SPELL_SPEED,direction:diff.normalize()});
+                    }).insert(Spell{lifetime:SPELL_LIFETIME,speed:SPELL_SPEED,direction:diff.normalize()});//.insert(player_attach::PlayerAttach{offset:Vec2::new(0.,20.)});
                 }
             }
         }

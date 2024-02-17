@@ -57,8 +57,8 @@ pub fn create_staff_anim_hashmap() -> HashMap<String,animation::Animation>
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_atlases : ResMut<Assets<TextureAtlas>>)
 {
-    let mut texture_handle = asset_server.load("wiznerd/staff-sheet.png");
-    let mut texture_atlas = TextureAtlas::from_grid
+    let texture_handle = asset_server.load("wiznerd/staff-sheet.png");
+    let texture_atlas = TextureAtlas::from_grid
     (
         texture_handle,
         Vec2::new(16.0, 16.0),
@@ -73,7 +73,7 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>, mut texture
     commands.spawn(SpriteSheetBundle
     {
         texture_atlas:texture_atlas_handle,
-        transform:Transform::from_scale(Vec3::splat(1.0)),
+        transform:Transform::from_scale(Vec3::splat(2.0)),
         // This above from_scale is what handled the SIZE of the sprite.
         ..default()
     }) 
