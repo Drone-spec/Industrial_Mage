@@ -9,20 +9,25 @@ use rand ::Rng;
 
 pub struct OreLogicPlugin;
 
-impl Plugin for OreLogicPlugin {
-    fn build(&self, app: &mut App) {
+impl Plugin for OreLogicPlugin 
+{
+    fn build(&self, app: &mut App) 
+    {
     app.add_systems(Startup, genesis);
     }
 }
 
-struct Tile {
+struct Tile 
+{
     pos: (i32, i32),
     sprite: usize,
     z_index: i32,
 }
 
-impl Tile {
-    fn new(pos: (i32, i32), sprite: usize, z_index: i32) -> Self {
+impl Tile 
+{
+    fn new(pos: (i32, i32), sprite: usize, z_index: i32) -> Self 
+    {
         Self { pos, sprite, z_index}
     }
     
@@ -44,14 +49,16 @@ const NOISE_SCALE       : f64   = 10.5;
 
 
 #[derive(Component, Debug)]
-pub struct Ore {
+pub struct Ore 
+{
     pub amount: f32,
     pub quality: f32,
 }
 
 
 fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_atlases: ResMut<Assets<TextureAtlas>>,
-) {
+) 
+{
     // BELOW IS USED TO HANDLE THE LOADING OF MAP ASSETS
     let texture_handle = asset_server.load(TEXTURE_PATH);
     let texture_atlas =
@@ -64,17 +71,21 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
 
     let mut tiles = Vec::new();
     let mut occupied = HashSet::new();
-    for x in 0..MAPHIGHT{
-        for y in 0..MAPWIDTH {
+    for x in 0..MAPHIGHT
+    {
+        for y in 0..MAPWIDTH 
+        {
             let mapvar = perlin.get([x as f64 / NOISE_SCALE, y as f64 / NOISE_SCALE]);
             let (x, y) = (x as i32, y as i32);
             
             // Basic Ground tiles selection
-            if mapvar > 0.2 {
+            if mapvar > 0.2 
+            {
                 occupied.insert((x ,y));
-                }
+            }
 
-            if mapvar > 0.3 && mapvar <0.35 {
+            if mapvar > 0.3 && mapvar <0.35 
+            {
                 tiles.push(Tile::new((x,y), 5, 2))
             }
             // THIS IS JUST A DEBUG MESSAGE DO NOT LEAVE IN
@@ -83,20 +94,24 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
         }
     }
 
-    for (x,y) in occupied.iter() {
+    for (x,y) in occupied.iter() 
+    {
         let (tile, neighbor_count) = get_tile((*x, *y), &occupied);
-        if neighbor_count == 1 {
+        if neighbor_count == 1 
+        {
             continue;
         }
         tiles.push(Tile::new((*x, *y), tile, 0))
     }
 
-    for tile in tiles.iter() {
+    for tile in tiles.iter() 
+    {
         let (x,y) = tile.pos;
         let (x, y) = grid_to_world(x as f32, y as f32);
         
         commands.spawn((
-            SpriteSheetBundle {
+            SpriteSheetBundle 
+            {
                 texture_atlas: texture_atlas_handle.clone(),
                 sprite: TextureAtlasSprite::new(tile.sprite),
                 transform: Transform::from_scale(Vec3::splat(SPRITESCALE as f32)).with_translation(vec3(x, y, tile.z_index as f32)),
@@ -107,21 +122,25 @@ fn genesis(mut commands: Commands, asset_server: Res<AssetServer>, mut texture_a
     }
 }
 
-fn get_tile((x, y): (i32, i32), occupied: &HashSet<(i32, i32)>) -> (usize,i32) {
+fn get_tile((x, y): (i32, i32), occupied: &HashSet<(i32, i32)>) -> (usize,i32) 
+{
     let (x, y) = (x as i32, y as i32);
     let neighbor_options = [(-1, 0), (1, 0),(0,-1),(0,1) ];
     let mut neightbor = [1,1,1,1];
     let mut neightbor_count = 0;
 
-    for (idx, (i, j)) in neighbor_options.iter().enumerate() {
-        if occupied.contains(&(x + i, y + j)) {
+    for (idx, (i, j)) in neighbor_options.iter().enumerate() 
+    {
+        if occupied.contains(&(x + i, y + j)) 
+        {
             neightbor_count += 1;
             continue;
         }
         neightbor[idx] = 0;
        
     }
-    let tile = match neightbor {
+    let tile = match neightbor 
+    {
         [1,0,0,1] => 3,
         [0,1,0,1] => 4,
         [1,0,1,0] => 2, 
@@ -133,13 +152,8 @@ fn get_tile((x, y): (i32, i32), occupied: &HashSet<(i32, i32)>) -> (usize,i32) {
 }
 
 
-
-
-
-
-
-
-fn grid_to_world(x: f32, y: f32) -> (f32, f32){
+fn grid_to_world(x: f32, y: f32) -> (f32, f32)
+{
     (
         x * TILE_WIDTH as f32 * SPRITESCALE as f32,
         y * TILE_HEIGHT as f32 * SPRITESCALE as f32

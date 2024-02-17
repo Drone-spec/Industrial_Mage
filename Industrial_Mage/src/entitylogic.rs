@@ -13,21 +13,24 @@ pub struct HealthRegenTimer(Timer);
 pub struct ManaRegenTimer(Timer);
 
 
-impl Plugin for EntityLogic {
-    fn build(&self, app: &mut App) {
+impl Plugin for EntityLogic
+{
+    fn build(&self, app: &mut App) 
+    {
     app.insert_resource(HealthRegenTimer(Timer::from_seconds(2.0, TimerMode::Repeating)))
     .insert_resource(ManaRegenTimer(Timer::from_seconds(2.0, TimerMode::Repeating)))
     .add_systems(Startup, spawn_goblin)
     .add_systems(FixedUpdate, health_regen)
-    .add_systems(Update, mana_regen)
-    .add_systems(Update, enemy_update)
+    .add_systems(Update, (mana_regen, enemy_update))
+    //.add_systems(Update, enemy_update)
     ;
     }
 }
 
 
 #[derive(Component, Debug)]
-pub struct Health {
+pub struct Health
+{
     pub amount: f32,
     pub max: f32,
     pub regen: bool,
@@ -36,7 +39,8 @@ pub struct Health {
 
 
 #[derive(Component, Debug)]
-pub struct Mana {
+pub struct Mana 
+{
     pub amount: f32,
     pub max: f32,
     pub regen: bool,
@@ -59,12 +63,14 @@ pub struct House;
 pub struct Defense;
 
 #[derive(Component, Debug)]
-pub struct Enemy{
+pub struct Enemy
+{
     speed: f32,
 }
 
 #[derive(Bundle)]
-struct BasicGoblin {
+struct BasicGoblin 
+{
     health: Health,
     mana: Mana,
     movingobjbun: MovingObjectBundle,
@@ -80,13 +86,17 @@ struct BasicGoblin {
 /// It just Query's for every Entity with Health and the pull Time and the Resource time.
 /// If Resource time has passed its value then run the below System That system will see if Regen is enabled and then ask the entity
 /// what its regen amount is and apply that to the main amount for that entity.
-fn health_regen(mut query: Query<(Entity, &mut Health)>, time: Res<Time>, mut timer: ResMut<HealthRegenTimer>){
-    if timer.0.tick(time.delta()).just_finished() {
+fn health_regen(mut query: Query<(Entity, &mut Health)>, time: Res<Time>, mut timer: ResMut<HealthRegenTimer>)
+{
+    if timer.0.tick(time.delta()).just_finished() 
+    {
         for (entity, mut health) in query.iter_mut()
         {   
-            match health.regen {
+            match health.regen 
+            {
                 true =>
-                if health.max > health.amount {
+                if health.max > health.amount 
+                {
                     health.amount += health.regenamount + (time.delta_seconds() * 2.0);
                     info!("Entity: {:?} is at {:.2}% Health!", entity, ((health.amount / health.max) * 100.00));
                 }
@@ -95,7 +105,8 @@ fn health_regen(mut query: Query<(Entity, &mut Health)>, time: Res<Time>, mut ti
                     info!("Entity: {:?} is at has max Health! {:.2}", entity, ((health.amount / health.max) * 100.00));
                 },
                 false => 
-                if health.max > health.amount {
+                if health.max > health.amount 
+                {
                     info!("Entity: {:?} is at {:.2} Health and Regen is hindered!", entity, ((health.amount / health.max) * 100.00));
                 }   
                 else
@@ -109,13 +120,17 @@ fn health_regen(mut query: Query<(Entity, &mut Health)>, time: Res<Time>, mut ti
 }
 
 #[allow(dead_code)]
-fn mana_regen(mut query: Query<(Entity, &mut Mana)>, time: Res<Time>, mut timer:ResMut<ManaRegenTimer>) {
-    if timer.0.tick(time.delta()).just_finished() {
+fn mana_regen(mut query: Query<(Entity, &mut Mana)>, time: Res<Time>, mut timer:ResMut<ManaRegenTimer>) 
+{
+    if timer.0.tick(time.delta()).just_finished() 
+    {
         for (entity, mut mana) in query.iter_mut()
         {
-            match mana.regen {
+            match mana.regen 
+            {
                 true =>
-                if mana.max > mana.amount {
+                if mana.max > mana.amount 
+                {
                     mana.amount += mana.regenamount + (time.delta_seconds() * 2.0);
                     info!("Entity: {:?} is at {:.2} Mana!", entity, mana.amount);
                 }
@@ -141,27 +156,30 @@ fn mana_regen(mut query: Query<(Entity, &mut Mana)>, time: Res<Time>, mut timer:
 
 
 // This will be the command for bringing more goblins into the fold, world
-fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
-
-
+fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> )
+{
     commands.spawn((BasicGoblin 
         {
-            health: Health{
+            health: Health
+            {
                 amount: 50.0,
                 max: 100.0,
                 regen: true,
                 regenamount: 3.0
             },
-            mana: Mana{
+            mana: Mana
+            {
                 amount: 0.0,
                 max: 100.0,
                 regen: true,
                 regenamount: 1.0
             },
-            movingobjbun: MovingObjectBundle {
+            movingobjbun: MovingObjectBundle 
+            {
                 velocity: Velocity::new(Vec3::ZERO),
                 acceleration: Acceleration::new(Vec3::ZERO),
-                model: SpriteBundle{
+                model: SpriteBundle
+                {
                     texture: asset_server.load("goblinhole/goblin.png"),
                     transform: Transform::from_translation(STARTING_TRANSLATION),
                     ..default()
@@ -173,22 +191,26 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
         
         BasicGoblin 
         {
-            health: Health{
+            health: Health
+            {
                 amount: 50.0,
                 max: 100.0,
                 regen: true,
                 regenamount: 2.0
             },
-            mana: Mana{
+            mana: Mana
+            {
                 amount: 0.0,
                 max: 100.0,
                 regen: true,
                 regenamount: 1.0
             },
-            movingobjbun: MovingObjectBundle {
+            movingobjbun: MovingObjectBundle 
+            {
                 velocity: Velocity::new(Vec3::ZERO),
                 acceleration: Acceleration::new(Vec3::ZERO),
-                model: SpriteBundle{
+                model: SpriteBundle
+                {
                     texture: asset_server.load("goblinhole/goblin.png"),
                     transform: Transform::from_translation(STARTING_TRANSLATION),
                     ..default()
@@ -198,22 +220,26 @@ fn spawn_goblin(mut commands: Commands, asset_server: Res<AssetServer> ){
     ));
     commands.spawn((BasicGoblin 
         {
-            health: Health{
+            health: Health
+            {
                 amount: 50.0,
                 max: 300.0,
                 regen: true,
                 regenamount: 10.0
             },
-            mana: Mana{
+            mana: Mana
+            {
                 amount: 0.0,
                 max: 100.0,
                 regen: true,
                 regenamount: 1.0
             },
-            movingobjbun: MovingObjectBundle {
+            movingobjbun: MovingObjectBundle 
+            {
                 velocity: Velocity::new(Vec3::ZERO),
                 acceleration: Acceleration::new(Vec3::ZERO),
-                model: SpriteBundle{
+                model: SpriteBundle
+                {
                     texture: asset_server.load("goblinhole/evilgoblin.png"),
                     transform: Transform::from_translation(Vec3::new(0.0, 0.0, 10.0)),
                     ..default()
@@ -239,7 +265,8 @@ fn spawn_goblinhome()
 fn enemy_update(time:Res<Time>,
     mut find_enemy:Query<(&Enemy, &mut Transform,Entity,&Health),Without<Wizard>>,
     find_wizard:Query<(&Wizard, &mut Transform),Without<Enemy>>,
-    mut commands: Commands) {
+    mut commands: Commands) 
+    {
         if let Ok((_wizard_movement,wizard_transform)) = find_wizard.get_single()
         {
             for(enemy, mut transform,entity,health) in find_enemy.iter_mut()
