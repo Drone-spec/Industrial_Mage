@@ -26,6 +26,7 @@ use camera     ::CameraLogic;
 use entitylogic::EntityLogic;
 //use despawn::DespawnPlugin;
 fn main() {
+
     App::new()
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
         .add_plugins(WizardPlugin)
